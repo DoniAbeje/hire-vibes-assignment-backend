@@ -11,9 +11,7 @@ import { AuthenticateUserDto } from './dto/authenticate-user.dto';
 
 export abstract class IUserService {
   abstract register(registerUserDto: RegisterUserDto): Promise<User>;
-  abstract authenticate(
-    authenticateUserDto: AuthenticateUserDto,
-  ): Promise<User>;
+  abstract authenticate(username: string, password: string): Promise<User>;
 }
 
 @Injectable()
@@ -34,17 +32,14 @@ export class UserService implements IUserService {
     return this.userRepo.register(registerUserDto);
   }
 
-  async authenticate(authUserDto: AuthenticateUserDto): Promise<User> {
-    const user = await this.userRepo.findByUserName(authUserDto.username);
+  async authenticate(username: string, password: string): Promise<User> {
+    const user = await this.userRepo.findByUserName(username);
     if (!user) {
-      throw new UnauthorizedException();
+      return null;
     }
-    const checkPassword = await bcrypt.compare(
-      authUserDto.password,
-      user.password,
-    );
+    const checkPassword = await bcrypt.compare(password, user.password);
     if (!checkPassword) {
-      throw new UnauthorizedException();
+      return null;
     }
     return user;
   }
