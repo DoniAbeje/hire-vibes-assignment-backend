@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
@@ -9,7 +11,15 @@ import { IUserService, UserService } from './user.service';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    PassportModule
+    PassportModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRETE'),
+        signOptions: { expiresIn: configService.get('JWT_EXPIRES_IN') },
+      }),
+      inject: [ConfigService],
+    }),
   ],
   providers: [
     {
@@ -20,7 +30,7 @@ import { IUserService, UserService } from './user.service';
       provide: IUserService,
       useClass: UserService,
     },
-    LocalStrategy
+    LocalStrategy,
   ],
 })
 export class UserModule {}
