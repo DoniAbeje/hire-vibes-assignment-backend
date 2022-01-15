@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
 import { User, UserSchema } from './schema/user.schema';
+import { UserController } from './user.controller';
 import { UserRepository, IUserRepository } from './user.repository';
 import { IUserService, UserService } from './user.service';
 
@@ -15,7 +16,7 @@ import { IUserService, UserService } from './user.service';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get('JWT_SECRETE'),
+        secret: configService.get('JWT_SECRET'),
         signOptions: { expiresIn: configService.get('JWT_EXPIRES_IN') },
       }),
       inject: [ConfigService],
@@ -32,5 +33,6 @@ import { IUserService, UserService } from './user.service';
     },
     LocalStrategy,
   ],
+  controllers: [UserController],
 })
 export class UserModule {}
