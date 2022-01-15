@@ -22,7 +22,7 @@ export class UserService implements IUserService {
   constructor(private userRepo: IUserRepository) {}
 
   async register(registerUserDto: RegisterUserDto): Promise<User> {
-    const user = await this.userRepo.findByUserName(registerUserDto.userName);
+    const user = await this.userRepo.findByUserName(registerUserDto.username);
     const hash = await bcrypt.hash(
       registerUserDto.password,
       UserService.HASH_ROUNDS,
@@ -35,7 +35,7 @@ export class UserService implements IUserService {
   }
 
   async authenticate(authUserDto: AuthenticateUserDto): Promise<User> {
-    const user = await this.userRepo.findByUserName(authUserDto.userName);
+    const user = await this.userRepo.findByUserName(authUserDto.username);
     if (!user) {
       throw new UnauthorizedException();
     }

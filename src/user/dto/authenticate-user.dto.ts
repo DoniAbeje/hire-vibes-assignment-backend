@@ -2,7 +2,7 @@ import { IsString, MinLength } from 'class-validator';
 
 export class AuthenticateUserDto {
   @IsString()
-  readonly userName: string;
+  readonly username: string;
 
   @IsString()
   readonly password: string;

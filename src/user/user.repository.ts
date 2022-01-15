@@ -18,6 +18,6 @@ export class UserRepository implements IUserRepository {
   }
 
   async findByUserName(userName: String): Promise<User> {
-    return this.userModel.findOne({ userName });
+    return this.userModel.findOne({ username: userName });
   }
 }
