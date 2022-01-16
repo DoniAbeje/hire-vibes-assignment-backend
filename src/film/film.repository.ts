@@ -7,6 +7,7 @@ import { Film, FilmDocument } from './schema/film.schema';
 export abstract class IFilmRepository {
   abstract fetchAll(): Promise<Film[]>;
   abstract create(createFilmDto: CreateFilmDto): Promise<Film>;
+  abstract findBySlug(slug: string);
 }
 
 @Injectable()
@@ -19,5 +20,9 @@ export class FilmRepository implements IFilmRepository {
 
   create(createFilmDto: CreateFilmDto): Promise<Film> {
     return this.filmModel.create(createFilmDto);
+  }
+
+  findBySlug(slug: string) {
+    return this.filmModel.findOne({ slug });
   }
 }

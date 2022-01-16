@@ -1,3 +1,4 @@
+import { ApiHideProperty } from '@nestjs/swagger';
 import {
   ArrayMinSize,
   IsDate,
@@ -35,4 +36,7 @@ export class CreateFilmDto {
 
   @IsNotEmpty()
   readonly photo: string;
+
+  @ApiHideProperty()
+  readonly slug;
 }

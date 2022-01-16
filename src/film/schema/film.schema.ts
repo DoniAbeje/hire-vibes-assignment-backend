@@ -28,6 +28,9 @@ export class Film {
 
   @Prop({ required: true })
   photo: string;
+
+  @Prop({ required: true, unique: true })
+  slug: string;
 }
 
 export const FilmSchema = SchemaFactory.createForClass(Film);
