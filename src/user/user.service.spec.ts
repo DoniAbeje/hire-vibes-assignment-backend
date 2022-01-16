@@ -30,13 +30,25 @@ describe('UserService', () => {
   });
 
   describe('register', () => {
+    const user: User = { username: 'john', password: 'password' };
+    const registerUserDto: RegisterUserDto = {
+      username: 'john',
+      password: 'password',
+    };
     it('should throw HttpException for duplicate username', async () => {
-      const user: User = { username: 'john', password: 'password' };
-      const dto: RegisterUserDto = { username: 'john', password: 'password' };
       jest.spyOn(repo, 'findByUserName').mockResolvedValue(user);
 
       const exception = new HttpException('Duplicate userName', 400);
-      await expect(service.register(dto)).rejects.toThrow(exception);
+      await expect(service.register(registerUserDto)).rejects.toThrow(
+        exception,
+      );
+    });
+
+    it('should register user successfully', async () => {
+      jest.spyOn(repo, 'findByUserName').mockResolvedValue(null);
+      jest.spyOn(repo, 'register').mockResolvedValue(user);
+
+      await expect(service.register(registerUserDto)).resolves.toBe(user);
     });
   });
 });
