@@ -5,6 +5,7 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { User } from './schema/user.schema';
 import { IUserRepository, UserRepository } from './user.repository';
 import { UserService } from './user.service';
+import * as bcrypt from 'bcrypt';
 
 describe('UserService', () => {
   let service: UserService;
@@ -68,6 +69,16 @@ describe('UserService', () => {
       await expect(
         service.authenticate(username, password),
       ).resolves.toBeNull();
+    });
+
+    it('should return successfully for correct inputs', async () => {
+      const { username, password } = user;
+      const hash = await bcrypt.hash(user.password, UserService.HASH_ROUNDS);
+      const savedUser = { username, password: hash };
+      jest.spyOn(repo, 'findByUserName').mockResolvedValue(savedUser);
+      await expect(service.authenticate(username, password)).resolves.toBe(
+        savedUser,
+      );
     });
   });
 });
