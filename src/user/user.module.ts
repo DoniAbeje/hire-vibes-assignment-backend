@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
+import { JwtStrategyWithBearerToken } from './jwt.strategy';
 import { LocalStrategy } from './local.strategy';
 import { User, UserSchema } from './schema/user.schema';
 import { UserController } from './user.controller';
@@ -32,6 +33,7 @@ import { IUserService, UserService } from './user.service';
       useClass: UserService,
     },
     LocalStrategy,
+    JwtStrategyWithBearerToken
   ],
   controllers: [UserController],
 })
