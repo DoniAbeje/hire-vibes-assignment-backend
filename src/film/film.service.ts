@@ -4,6 +4,7 @@ import { IFilmRepository } from './film.repository';
 import { Film } from './schema/film.schema';
 
 export abstract class IFilmService {
+  abstract fetchAll() : Promise<Film[]> 
   abstract create(createFilmDto: CreateFilmDto): Promise<Film>;
 }
 
@@ -11,6 +12,10 @@ export abstract class IFilmService {
 export class FilmService implements IFilmService {
   private readonly logger = new Logger(FilmService.name);
   constructor(private filmRepository: IFilmRepository) {}
+ 
+  fetchAll(): Promise<Film[]> {
+    return this.filmRepository.fetchAll();
+  }
 
   async create(createFilmDto: CreateFilmDto): Promise<Film> {
     const film = await this.filmRepository.create(createFilmDto);
