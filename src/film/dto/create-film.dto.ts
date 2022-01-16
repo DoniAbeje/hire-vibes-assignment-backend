@@ -1,6 +1,7 @@
 import {
   ArrayMinSize,
   IsDate,
+  IsDateString,
   IsInt,
   IsString,
   Max,
@@ -14,7 +15,7 @@ export class CreateFilmDto {
   @IsString()
   readonly description: string;
 
-  @IsDate()
+  @IsDateString()
   readonly releaseDate: Date;
 
   @IsInt()
