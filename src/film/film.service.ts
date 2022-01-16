@@ -1,10 +1,11 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CreateFilmDto } from './dto/create-film.dto';
 import { IFilmRepository } from './film.repository';
 import { Film } from './schema/film.schema';
 import * as makeSlug from 'slug';
 
 export abstract class IFilmService {
+  abstract fetchBySlug(slug: string): Promise<Film>;
   abstract fetchAll(): Promise<Film[]>;
   abstract create(createFilmDto: CreateFilmDto): Promise<Film>;
 }
@@ -18,6 +19,13 @@ export class FilmService implements IFilmService {
     return this.filmRepository.fetchAll();
   }
 
+  async fetchBySlug(slug: string): Promise<Film> {
+    const film = await this.filmRepository.findBySlug(slug);
+    if (!film) {
+      throw new NotFoundException();
+    }
+    return film;
+  }
   async create(createFilmDto: CreateFilmDto): Promise<Film> {
     const slug = await this.generateSlug(createFilmDto.name);
     createFilmDto = { ...createFilmDto, slug };
