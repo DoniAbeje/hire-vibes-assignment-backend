@@ -9,6 +9,11 @@ import { UserService } from './user.service';
 describe('UserService', () => {
   let service: UserService;
   let repo: IUserRepository;
+  const user: User = { username: 'john', password: 'password' } as const;
+  const registerUserDto: RegisterUserDto = {
+    username: 'john',
+    password: 'password',
+  } as const;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -30,11 +35,6 @@ describe('UserService', () => {
   });
 
   describe('register', () => {
-    const user: User = { username: 'john', password: 'password' };
-    const registerUserDto: RegisterUserDto = {
-      username: 'john',
-      password: 'password',
-    };
     it('should throw HttpException for duplicate username', async () => {
       jest.spyOn(repo, 'findByUserName').mockResolvedValue(user);
 
@@ -49,6 +49,16 @@ describe('UserService', () => {
       jest.spyOn(repo, 'register').mockResolvedValue(user);
 
       await expect(service.register(registerUserDto)).resolves.toBe(user);
+    });
+  });
+
+  describe('authenticate', () => {
+    it('should return null for non existing user', async () => {
+      jest.spyOn(repo, 'findByUserName').mockResolvedValue(null);
+      const { username, password } = user;
+      await expect(
+        service.authenticate(username, password),
+      ).resolves.toBeNull();
     });
   });
 });
