@@ -60,5 +60,14 @@ describe('UserService', () => {
         service.authenticate(username, password),
       ).resolves.toBeNull();
     });
+
+    it('should return null for wrong password', async () => {
+      jest.spyOn(repo, 'findByUserName').mockResolvedValue(user);
+      const { username } = user;
+      const password = 'wrong-password';
+      await expect(
+        service.authenticate(username, password),
+      ).resolves.toBeNull();
+    });
   });
 });
