@@ -3,16 +3,17 @@ import {
   IsDate,
   IsDateString,
   IsInt,
+  IsNotEmpty,
   IsString,
   Max,
   Min,
 } from 'class-validator';
 
 export class CreateFilmDto {
-  @IsString()
+  @IsNotEmpty()
   readonly name: string;
 
-  @IsString()
+  @IsNotEmpty()
   readonly description: string;
 
   @IsDateString()
@@ -26,12 +27,12 @@ export class CreateFilmDto {
   @Min(0)
   readonly ticketPrice: number;
 
-  @IsString()
+  @IsNotEmpty()
   readonly country: string;
 
   @ArrayMinSize(1)
   readonly genre: string[];
 
-  @IsString()
+  @IsNotEmpty()
   readonly photo: string;
 }
