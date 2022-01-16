@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FilmRepository, IFilmRepository } from './film.repository';
+import { FilmService, IFilmService } from './film.service';
 import { Film, FilmSchema } from './schema/film.schema';
 
 @Module({
@@ -11,6 +12,10 @@ import { Film, FilmSchema } from './schema/film.schema';
     {
       provide: IFilmRepository,
       useClass: FilmRepository,
+    },
+    {
+      provide: IFilmService,
+      useClass: FilmService,
     },
   ],
 })
