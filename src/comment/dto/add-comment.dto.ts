@@ -6,4 +6,7 @@ export class AddCommentDto {
 
   @IsNotEmpty()
   readonly comment: string;
+
+  @IsNotEmpty()
+  readonly filmId: string;
 }

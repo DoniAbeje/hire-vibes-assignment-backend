@@ -10,6 +10,9 @@ export class Comment {
 
   @Prop({ required: true })
   comment: string;
+  
+  @Prop({ required: true })
+  filmId: string;
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);
