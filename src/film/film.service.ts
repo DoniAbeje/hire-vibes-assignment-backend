@@ -8,7 +8,7 @@ export abstract class IFilmService {
   abstract fetchBySlug(slug: string): Promise<Film>;
   abstract fetchAll(): Promise<Film[]>;
   abstract create(createFilmDto: CreateFilmDto): Promise<Film>;
-  abstract findById(id: string): Promise<Film>;
+  abstract fetchById(id: string): Promise<Film>;
 }
 
 @Injectable()
@@ -35,8 +35,8 @@ export class FilmService implements IFilmService {
     return film;
   }
 
-  findById(id: string): Promise<Film> {
-    const film = this.filmRepository.findById(id);
+  async fetchById(id: string): Promise<Film> {
+    const film = await this.filmRepository.findById(id);
     if (!film) {
       throw new NotFoundException('Film not found');
     }

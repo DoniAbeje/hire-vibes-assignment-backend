@@ -89,4 +89,18 @@ describe('FilmService', () => {
       );
     });
   });
+
+  describe('fetchById', () => {
+    it('should throw NotFoundException for non existing film with the given id', async () => {
+      jest.spyOn(repo, 'findById').mockResolvedValue(null);
+      await expect(service.fetchById('non-existing-id')).rejects.toThrow(
+        NotFoundException,
+      );
+    });
+
+    it('should return film instance for existing film with the given id', async () => {
+      jest.spyOn(repo, 'findById').mockResolvedValue(film);
+      await expect(service.fetchById(film.slug)).resolves.toBe(film);
+    });
+  });
 });
