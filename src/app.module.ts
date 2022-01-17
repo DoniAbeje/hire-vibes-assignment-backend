@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FilmModule } from './film/film.module';
+import { CommentModule } from './comment/comment.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -17,6 +18,7 @@ import { FilmModule } from './film/film.module';
       inject: [ConfigService],
     }),
     FilmModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
