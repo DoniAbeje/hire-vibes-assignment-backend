@@ -41,6 +41,14 @@ describe('FilmService', () => {
     repo = module.get<IFilmRepository>(IFilmRepository);
   });
 
+  describe('fetchAll', () => {
+    it('should return all films', async () => {
+      const allFilms = [film];
+      jest.spyOn(repo, 'fetchAll').mockResolvedValue(allFilms);
+      await expect(service.fetchAll()).resolves.toBe(allFilms);
+    });
+  });
+
   describe('fetchBySlug', () => {
     it('should throw NotFoundException for non existing film with the given slug', async () => {
       jest.spyOn(repo, 'findBySlug').mockResolvedValue(null);
