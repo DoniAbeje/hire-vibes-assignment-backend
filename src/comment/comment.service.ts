@@ -6,6 +6,7 @@ import { Comment } from './schema/Comment.schema';
 
 export abstract class ICommentService {
   abstract add(addCommentDto: AddCommentDto): Promise<Comment>;
+  abstract fetchByFilmId(filmId: string): Promise<Comment[]>;
 }
 
 @Injectable()
@@ -18,7 +19,11 @@ export class CommentService implements ICommentService {
   async add(addCommentDto: AddCommentDto): Promise<Comment> {
     // check if film exists
     await this.filmService.fetchById(addCommentDto.filmId);
-
     return this.commentRepository.create(addCommentDto);
+  }
+
+  async fetchByFilmId(filmId: string): Promise<Comment[]> {
+    await this.filmService.fetchById(filmId);
+    return this.commentRepository.findByFilmId(filmId);
   }
 }

@@ -6,15 +6,20 @@ import { Comment, CommentDocument } from './schema/Comment.schema';
 
 export abstract class ICommentRepository {
   abstract create(addCommentDto: AddCommentDto): Promise<Comment>;
+  abstract findByFilmId(filmId: string): Promise<Comment[]>;
 }
 
 @Injectable()
 export class CommentRepository implements ICommentRepository {
   constructor(
-    @InjectModel(Comment.name) private CommentModel: Model<CommentDocument>,
+    @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
   ) {}
 
   create(addCommentDto: AddCommentDto): Promise<Comment> {
-    return this.CommentModel.create(addCommentDto);
+    return this.commentModel.create(addCommentDto);
+  }
+
+  findByFilmId(filmId: string): Promise<Comment[]> {
+    return this.commentModel.find({ filmId }).exec();
   }
 }
