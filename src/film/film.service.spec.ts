@@ -20,7 +20,7 @@ describe('FilmService', () => {
     genre: Array('Drama'),
     photo:
       'https://images-na.ssl-images-amazon.com/images/P/B000P0J0EW.01._SX200_SCLZZZZZZZ_.jpg',
-    slug: 'The-Shawshank-Redemption',
+    slug: 'the-shawshank-redemption-1994',
   } as const;
   const createFilmDto: CreateFilmDto = { ...film, slug: undefined };
 
@@ -71,6 +71,22 @@ describe('FilmService', () => {
       jest.spyOn(repo, 'create').mockResolvedValue(film);
 
       await expect(service.create(createFilmDto)).resolves.toBe(film);
+    });
+  });
+
+  describe('generateSlug', () => {
+    it('should return slug without random number concatenated', async () => {
+      jest.spyOn(repo, 'findBySlug').mockResolvedValue(null);
+      await expect(service.generateSlug(film.name)).resolves.toBe(film.slug);
+    });
+
+    it('should return slug with random number concatenated', async () => {
+      jest.spyOn(repo, 'findBySlug').mockResolvedValue(film);
+      const now = 1234;
+      jest.spyOn(Date, 'now').mockReturnValue(now);
+      await expect(service.generateSlug(film.name)).resolves.toBe(
+        `${film.slug}-${now}`,
+      );
     });
   });
 });
