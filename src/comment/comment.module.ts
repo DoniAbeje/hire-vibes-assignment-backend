@@ -4,6 +4,7 @@ import { FilmModule } from '../film/film.module';
 import { CommentRepository, ICommentRepository } from './comment.repository';
 import { CommentService, ICommentService } from './comment.service';
 import { Comment, CommentSchema } from './schema/Comment.schema';
+import { CommentController } from './comment.controller';
 
 @Module({
   imports: [
@@ -20,5 +21,6 @@ import { Comment, CommentSchema } from './schema/Comment.schema';
       useClass: CommentRepository,
     },
   ],
+  controllers: [CommentController],
 })
 export class CommentModule {}
