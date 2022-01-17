@@ -20,5 +20,11 @@ import { Film, FilmSchema } from './schema/film.schema';
       useClass: FilmService,
     },
   ],
+  exports: [
+    {
+      provide: IFilmService,
+      useClass: FilmService,
+    },
+  ],
 })
 export class FilmModule {}
