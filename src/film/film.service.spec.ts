@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { CreateFilmDto } from './dto/create-film.dto';
 import { FilmRepository, IFilmRepository } from './film.repository';
 import { FilmService } from './film.service';
 import { Film } from './schema/film.schema';
@@ -21,6 +22,7 @@ describe('FilmService', () => {
       'https://images-na.ssl-images-amazon.com/images/P/B000P0J0EW.01._SX200_SCLZZZZZZZ_.jpg',
     slug: 'The-Shawshank-Redemption',
   } as const;
+  const createFilmDto: CreateFilmDto = { ...film, slug: undefined };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -60,6 +62,15 @@ describe('FilmService', () => {
     it('should return film instance for existing film with the given slug', async () => {
       jest.spyOn(repo, 'findBySlug').mockResolvedValue(film);
       await expect(service.fetchBySlug(film.slug)).resolves.toBe(film);
+    });
+  });
+
+  describe('create', () => {
+    it('should return the newly created film', async () => {
+      jest.spyOn(service, 'generateSlug').mockResolvedValue(film.slug);
+      jest.spyOn(repo, 'create').mockResolvedValue(film);
+
+      await expect(service.create(createFilmDto)).resolves.toBe(film);
     });
   });
 });
