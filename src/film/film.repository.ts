@@ -8,6 +8,7 @@ export abstract class IFilmRepository {
   abstract fetchAll(): Promise<Film[]>;
   abstract create(createFilmDto: CreateFilmDto): Promise<Film>;
   abstract findBySlug(slug: string): Promise<Film>;
+  abstract findById(id: string): Promise<Film>;
 }
 
 @Injectable()
@@ -24,5 +25,9 @@ export class FilmRepository implements IFilmRepository {
 
   findBySlug(slug: string): Promise<Film> {
     return this.filmModel.findOne({ slug }).exec();
+  }
+
+  findById(id: string): Promise<Film> {
+    return this.filmModel.findById(id).exec();
   }
 }
