@@ -13,6 +13,8 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors();
+
   const options = new DocumentBuilder()
     .setTitle('Films API')
     .setVersion('1.0')
