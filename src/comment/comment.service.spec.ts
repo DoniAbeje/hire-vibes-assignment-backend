@@ -84,4 +84,23 @@ describe('CommentService', () => {
       await expect(service.add(addCommentDto)).resolves.toBe(comment);
     });
   });
+
+  describe('fechByFilmId', () => {
+    it('should throw NotFoundException if film does not exist', async () => {
+      jest
+        .spyOn(filmService, 'fetchById')
+        .mockRejectedValue(new NotFoundException());
+      await expect(service.add(addCommentDto)).rejects.toThrow(
+        NotFoundException,
+      );
+    });
+
+    it('should return all comments for the given film', async () => {
+      const filmId = '';
+      const filmComments = [comment, comment];
+      jest.spyOn(filmService, 'fetchById').mockResolvedValue(film);
+      jest.spyOn(repo, 'findByFilmId').mockResolvedValue(filmComments);
+      await expect(service.fetchByFilmId(filmId)).resolves.toBe(filmComments);
+    });
+  });
 });
