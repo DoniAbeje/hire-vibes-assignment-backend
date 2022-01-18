@@ -2,6 +2,7 @@ import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthenticateUserDto } from './dto/authenticate-user.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
+import { UserResponse } from './dto/user-response.dto';
 import { LocalAuthGuard } from './local.guard';
 import { IUserService } from './user.service';
 
@@ -14,7 +15,8 @@ export class UserController {
 
   @Post('/register')
   async register(@Body() registerUserDto: RegisterUserDto) {
-    return await this.userService.register(registerUserDto);
+    const user = await this.userService.register(registerUserDto);
+    return new UserResponse(user);
   }
 
   @UseGuards(LocalAuthGuard)
