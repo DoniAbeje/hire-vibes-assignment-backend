@@ -25,6 +25,6 @@ export class CommentController {
 
   @Get('film/:filmId')
   async fetchByFilmId(@Param('filmId') filmId) {
-    await this.commentService.fetchByFilmId(filmId);
+    return await this.commentService.fetchByFilmId(filmId);
   }
 }
