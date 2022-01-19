@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { FilmModule } from '../film/film.module';
 import { CommentRepository, ICommentRepository } from './comment.repository';
 import { CommentService, ICommentService } from './comment.service';
-import { Comment, CommentSchema } from './schema/Comment.schema';
+import { Comment, CommentSchema } from './schema/comment.schema';
 import { CommentController } from './comment.controller';
 
 @Module({

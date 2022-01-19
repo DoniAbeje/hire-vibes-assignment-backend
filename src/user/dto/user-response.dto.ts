@@ -1,4 +1,4 @@
-import { User } from '../schema/User.schema';
+import { User } from '../schema/user.schema';
 
 export class UserResponse {
   constructor(user: User) {

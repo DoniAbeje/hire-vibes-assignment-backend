@@ -1,4 +1,4 @@
-import { Film } from '../schema/Film.schema';
+import { Film } from '../schema/film.schema';
 
 export class FilmResponse {
   constructor(film: Film) {
