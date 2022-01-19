@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { IFilmService } from '../film/film.service';
 import { ICommentRepository } from './comment.repository';
 import { AddCommentDto } from './dto/add-comment.dto';
-import { Comment } from './schema/Comment.schema';
+import { Comment } from './schema/comment.schema';
 
 export abstract class ICommentService {
   abstract add(addCommentDto: AddCommentDto): Promise<Comment>;

@@ -1,4 +1,4 @@
-import { Comment } from '../schema/Comment.schema';
+import { Comment } from '../schema/comment.schema';
 
 export class CommentResponse {
   constructor(comment: Comment) {
