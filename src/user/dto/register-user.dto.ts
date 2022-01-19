@@ -1,7 +1,7 @@
-import { IsString, MinLength } from 'class-validator';
+import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class RegisterUserDto {
-  @IsString()
+  @IsNotEmpty()
   readonly username: string;
 
   @MinLength(8)
