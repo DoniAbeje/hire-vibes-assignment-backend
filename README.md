@@ -1,35 +1,89 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The source code is structured into three separate feature based modules.
+- Comment module
+- Film module
+- User module
+ ```
+
+├───comment
+│   │   comment.controller.spec.ts
+│   │   comment.controller.ts
+│   │   comment.module.ts
+│   │   comment.repository.ts
+│   │   comment.service.spec.ts
+│   │   comment.service.ts
+│   │
+│   ├───dto
+│   │       add-comment.dto.ts
+│   │       comment-response.dto.ts
+│   │       comment-response.spec.ts
+│   │
+│   └───schema
+│           comment.schema.ts
+│
+├───film
+│   │   film.controller.spec.ts
+│   │   film.controller.ts
+│   │   film.module.ts
+│   │   film.repository.spec.ts
+│   │   film.repository.ts
+│   │   film.service.spec.ts
+│   │   film.service.ts
+│   │
+│   ├───dto
+│   │       create-film.dto.ts
+│   │       film-response.dto.ts
+│   │       film-response.spec.ts
+│   │
+│   └───schema
+│           film.schema.ts
+│
+└───user
+    │   jwt.guard.ts
+    │   jwt.strategy.ts
+    │   local.guard.ts
+    │   local.strategy.spec.ts
+    │   local.strategy.ts
+    │   user.controller.spec.ts
+    │   user.controller.ts
+    │   user.module.ts
+    │   user.repository.spec.ts
+    │   user.repository.ts
+    │   user.service.spec.ts
+    │   user.service.ts
+    │
+    ├───dto
+    │       authenticate-user.dto.ts
+    │       register-user.dto.ts
+    │       user-response.dto.ts
+    │       user-response.spec.ts
+    │
+    └───schema
+            user.schema.ts
+ ```
+In each module controllers handle the web layer by accepting requests and then transfering them to service layer. The service layer handles the business logic by further processing the request. The bottom layer is the data access layer that is responsible for data persistence and query. Each dependency between these three layers is based on abstraction not on concrete implementation which is automatically fulfilled by the IoC container. This makes the codebase to be highly extandable.
 
 ## Installation
 
 ```bash
 $ npm install
+```
+
+## Configuration
+Copy the content inside `.env.default` to a new `.env` file. Then replace the value for DB_CONNECTION with your database connection string.
+Your `.env` file should be something like this.
+```env
+DB_CONNECTION=mongodb://localhost:27017/hire-vibes-db
+JWT_SECRET=KLASD9080ASDF-8-98-098JW
+JWT_EXPIRES_IN=6d
+```
+## Seeding
+The following command inserts three films with one comment for each.
+```bash
+# seed
+$ npm run seed
 ```
 
 ## Running the app
@@ -46,28 +100,16 @@ $ npm run start:prod
 ```
 
 ## Test
+When writing unit tests, I gave much emphasis to service classes which hold almost all the business logic. Since repositories highly depend on the underlaying data access layer and controllers depend on request scope context, I believe they should be addressed more by integration tests.
 
+#### Test Coverage
+![Test result](https://user-images.githubusercontent.com/26971929/150219163-1bc8e901-8653-4ca9-bebe-fe9f2499125e.png "Test result")
 ```bash
 # unit tests
 $ npm run test
-
-# e2e tests
-$ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
 ```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+You can test the deployed product and swagger documentation here [https://hire-vibes-api.herokuapp.com/doc/](https://hire-vibes-api.herokuapp.com/doc/)
