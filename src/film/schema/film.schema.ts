@@ -5,6 +5,8 @@ export type FilmDocument = Film & Document;
 
 @Schema()
 export class Film {
+  _id?;
+
   @Prop({ required: true })
   name: string;
 
