@@ -4,7 +4,7 @@ export class FilmResponse {
   constructor(film: Film) {
     return FilmResponse.fromModel(film);
   }
-
+  id: string;
   name: string;
   description: string;
   releaseDate: Date;
@@ -17,6 +17,7 @@ export class FilmResponse {
 
   static fromModel(filmModel: Film): FilmResponse {
     const {
+      _id: id,
       name,
       description,
       releaseDate,
@@ -28,6 +29,7 @@ export class FilmResponse {
       slug,
     } = filmModel;
     const response: FilmResponse = {
+      id,
       name,
       description,
       releaseDate,

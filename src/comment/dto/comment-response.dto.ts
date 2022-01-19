@@ -4,14 +4,14 @@ export class CommentResponse {
   constructor(comment: Comment) {
     return CommentResponse.fromModel(comment);
   }
-  
+  id: string;
   name: string;
   comment: string;
   filmId: string;
 
   static fromModel(commentModel: Comment): CommentResponse {
-    const { name, comment, filmId } = commentModel;
-    const response: CommentResponse = { name, comment, filmId };
+    const { _id: id, name, comment, filmId } = commentModel;
+    const response: CommentResponse = { id, name, comment, filmId };
     return response;
   }
 
