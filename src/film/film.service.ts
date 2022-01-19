@@ -40,7 +40,7 @@ export class FilmService implements IFilmService {
     if (!film) {
       throw new NotFoundException('Film not found');
     }
-    return film
+    return film;
   }
 
   async generateSlug(text: string) {

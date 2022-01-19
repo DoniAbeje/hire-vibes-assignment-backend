@@ -33,7 +33,7 @@ import { IUserService, UserService } from './user.service';
       useClass: UserService,
     },
     LocalStrategy,
-    JwtStrategyWithBearerToken
+    JwtStrategyWithBearerToken,
   ],
   controllers: [UserController],
 })

@@ -32,13 +32,16 @@ describe('UserRepository', () => {
   it('should return user for authenticated user', async () => {
     const { username, password } = user;
     jest.spyOn(userService, 'authenticate').mockResolvedValue(user);
-    await expect(localStrategy.validate(username, password)).resolves.toBe(user);
+    await expect(localStrategy.validate(username, password)).resolves.toBe(
+      user,
+    );
   });
 
   it('should throw UnauthorizedException for unauthenticated user', async () => {
     const { username, password } = user;
     jest.spyOn(userService, 'authenticate').mockResolvedValue(null);
-    await expect(localStrategy.validate(username, password)).rejects.toThrow(UnauthorizedException);
+    await expect(localStrategy.validate(username, password)).rejects.toThrow(
+      UnauthorizedException,
+    );
   });
 });
-
