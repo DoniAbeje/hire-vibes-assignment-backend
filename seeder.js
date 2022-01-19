@@ -65,7 +65,7 @@ async function seed() {
     await commentCollection.insertOne({
       comment: 'Nice movie!! Like it',
       name: 'Michael',
-      filmId: result.insertedId,
+      filmId: result.insertedId.toHexString(),
     });
   }
   console.log('DB Seed Complete');
